@@ -86,16 +86,16 @@ async function configHandle(appConfig, pageConfigs, miniprogramRoot, targetSrcFo
 			//注：因json里不能含有注释，因些template/manifest.json文件里的注释已经被删除。
 			let file_manifest = path.join(__dirname, "./manifest.json");
 			let manifestJson = {};
-			if (fs.existsSync(manifestJson)) {
+			if (fs.existsSync(file_manifest)) {
 				manifestJson = fs.readJsonSync(file_manifest);
+				//
+				manifestJson.name = packageJson.name || "";
+				manifestJson.description = packageJson.description || "";
+				manifestJson.versionName = packageJson.version || "1.0.0";
+				manifestJson["mp-weixin"].appid = packageJson.appid || "";
 			}else{
 				console.log("找不到manifest.json");
 			}
-			//
-			manifestJson.name = packageJson.name || "";
-			manifestJson.description = packageJson.description || "";
-			manifestJson.versionName = packageJson.version || "1.0.0";
-			manifestJson["mp-weixin"].appid = packageJson.appid || "";
 
 			//manifest.json
 			file_manifest = path.join(targetSrcFolder, "manifest.json");
